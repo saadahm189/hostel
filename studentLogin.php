@@ -11,6 +11,28 @@
 <body class="bg-cover" style="background-image: url(slideImages/bg.jpg)">
     <?php require('partials/connection.php'); ?>
     <?php require('partials/navbar.php'); ?>
+    <!-- PHP CODE -->
+    <?php
+    // session_start();
+    // When form submitted, check and create user session.
+    if (isset($_POST['std'])) {
+        $sid = $_REQUEST['std'];
+        $password = $_REQUEST['password'];
+
+        // Check user is exist in the database
+        $query = "SELECT * FROM `student` WHERE student_id='$sid'
+                     AND password='$password'";
+        $result = mysqli_query($connection, $query);
+        $rows = mysqli_num_rows($result);
+        if ($rows == 1) {
+            // $_SESSION['std'] = $sid;
+            // Redirect to user dashboard page
+            header("Location: studentDash.php?user=" . $sid);
+        } else {
+            echo '<script>alert("Wrong Information Student")</script>';
+        }
+    }
+    ?>
     <form class="form" method="post" name="login">
         <section>
             <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -36,28 +58,6 @@
             </div>
         </section>
     </form>
-    <!-- PHP CODE -->
-    <?php
-    // session_start();
-    // When form submitted, check and create user session.
-    if (isset($_POST['std'])) {
-        $sid = $_REQUEST['std'];
-        $password = $_REQUEST['password'];
-
-        // Check user is exist in the database
-        $query = "SELECT * FROM `student` WHERE student_id='$sid'
-                     AND password='$password'";
-        $result = mysqli_query($connection, $query);
-        $rows = mysqli_num_rows($result);
-        if ($rows == 1) {
-            // $_SESSION['std'] = $sid;
-            // Redirect to user dashboard page
-            header("Location: studentDash.php?user=".$sid);
-        } else {
-            echo '<script>alert("Wrong Information Student")</script>';
-        }
-    }
-    ?>
 </body>
 
 </html>
