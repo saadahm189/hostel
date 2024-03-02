@@ -25,18 +25,54 @@
     <div class="flex flex-row">
         <?php
         require('adminPartials/navbar.php');
+        $query1 = "SELECT * FROM `admin`";
+        $query2 = "SELECT * FROM `student`";
+        $query3 = "SELECT * FROM `room`";
+        $result1 = mysqli_query($connection, $query1);
+        $result2 = mysqli_query($connection, $query2);
+        $result3 = mysqli_query($connection, $query3);
+        $numRows1 = mysqli_num_rows($result1);
+        $numRows2 = mysqli_num_rows($result2);
+        $numRows3 = mysqli_num_rows($result3);
+        // while ($row = $result->fetch_assoc()) {
+        // }
         ?>
         <!-- HTML -->
         <div class="bg-gray-100 shadow-xl m-5 p-5 basis-4/5 rounded-lg">
-            <div class="grid grid-cols-3 gap-4">
-                <div class="bg-gray-200 m-5 p-5 shadow-lg">
-                    <h1 class="text-xl">1</h1>
-                </div>
-                <div class="bg-gray-200 m-5 p-5 shadow-lg">
-                    <h1 class="text-xl">2</h1>
-                </div>
-                <div class="bg-gray-200 m-5 p-5 shadow-lg">
-                    <h1 class="text-xl">3</h1>
+            <div class="mb-5">
+                <div class="grid grid-cols-1 gap-5 sm:grid-cols-4 mt-4">
+                    <div class="bg-white overflow-hidden shadow sm:rounded-lg">
+                        <div class="px-4 py-5 sm:p-6">
+                            <dl>
+                                <dt class="text-md text-center leading-5 font-medium text-gray-600 truncate">Admin</dt>
+                                <dd class="m-3 p-3 text-5xl text-center font-semibold text-green-600"><?php echo $numRows1; ?></dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="bg-white overflow-hidden shadow sm:rounded-lg">
+                        <div class="px-4 py-5 sm:p-6">
+                            <dl>
+                                <dt class="text-md text-center leading-5 font-medium text-gray-600 truncate">Students</dt>
+                                <dd class="m-3 p-3 text-5xl text-center font-semibold text-green-600"><?php echo $numRows2; ?></dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="bg-white overflow-hidden shadow sm:rounded-lg">
+                        <div class="px-4 py-5 sm:p-6">
+                            <dl>
+                                <dt class="text-md text-center leading-5 font-medium text-gray-600 truncate">Rooms</dt>
+                                <dd class="m-3 p-3 text-5xl text-center font-semibold text-green-600"><?php echo $numRows3; ?></dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <!-- <div class="bg-white overflow-hidden shadow sm:rounded-lg">
+                        <div class="px-4 py-5 sm:p-6">
+                            <dl>
+                                <dt class="text-md text-center leading-5 font-medium text-gray-600 truncate">Total Meal</dt>
+                                <dd class="m-3 p-3 text-5xl text-center font-semibold text-green-600">4</dd>
+                            </dl>
+                        </div>
+                    </div> -->
                 </div>
             </div>
         </div>

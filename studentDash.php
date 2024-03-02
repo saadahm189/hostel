@@ -16,8 +16,6 @@
     <?php
     require('partials/connection.php');
     // include("auth_session.php");
-    $today = date('j'); // Date nie asbe  
-    // echo $today;
     ?>
     <!-- Receive ID from login page -->
     <?php
@@ -49,9 +47,12 @@
     <?php
     $query = "SELECT * FROM `id$sid`";
     $result = mysqli_query($connection, $query);
-
+    $BreakfastCount = 0;
+    $LunchCount = 0;
+    $DinnerCount = 0;
+    $TotalCount = 0;
     ?>
-    <!-- HTML -->
+    <!-- HTML -->`
     <div class="m-5 p-5">
         <div class="flex flex-col">
             <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -74,11 +75,22 @@
                                     $L = $row["L"];
                                     $D = $row["D"];
                                     $day = $row["day"];
+                                    if ($B == 1) {
+                                        $BreakfastCount = $BreakfastCount + 1;
+                                    }
+                                    if ($L == 1) {
+                                        $LunchCount = $LunchCount + 1;
+                                    }
+                                    if ($D == 1) {
+                                        $DinnerCount = $DinnerCount + 1;
+                                    }
 
                                 ?>
                                     <tr class="border-b bg-neutral-100 dark:border-neutral-500 dark:bg-neutral-700">
                                         <form method="post" action="">
-                                            <td class="whitespace-nowrap px-6 py-4"><?php echo $row["day"] ?>
+                                            <td class="whitespace-nowrap px-6 py-4"><?php echo date('F');
+                                                                                    echo " ";
+                                                                                    echo $row["day"] ?>
                                                 <select name="day" class="hidden">
                                                     <option value="<?php echo $row["day"] ?>"></option>
                                                 </select>
@@ -129,6 +141,50 @@
                                         </t>
                                     <?php } ?>
                             </tbody>
+                            <?php
+                            // echo $BreakfastCount;
+                            // echo $LunchCount;
+                            // echo $DinnerCount;
+                            $TotalCount = $BreakfastCount + $LunchCount + $DinnerCount;
+                            ?>
+                            <div class="mb-5">
+                                <h2 class="text-xl font-bold text-center tracking-tight text-gray-500">TOTAL COUNT on <p1 class="text-red-500"><?php echo date('l, F j, Y'); ?></p1>
+                                </h2>
+                                <div class="grid grid-cols-1 gap-5 sm:grid-cols-4 mt-4">
+                                    <div class="bg-white overflow-hidden shadow sm:rounded-lg">
+                                        <div class="px-4 py-5 sm:p-6">
+                                            <dl>
+                                                <dt class="text-sm leading-5 font-medium text-gray-500 truncate">Breakfast</dt>
+                                                <dd class="mt-1 text-3xl leading-9 font-semibold text-indigo-600"><?php echo $BreakfastCount; ?></dd>
+                                            </dl>
+                                        </div>
+                                    </div>
+                                    <div class="bg-white overflow-hidden shadow sm:rounded-lg">
+                                        <div class="px-4 py-5 sm:p-6">
+                                            <dl>
+                                                <dt class="text-sm leading-5 font-medium text-gray-500 truncate">Lunch</dt>
+                                                <dd class="mt-1 text-3xl leading-9 font-semibold text-indigo-600"><?php echo $LunchCount; ?></dd>
+                                            </dl>
+                                        </div>
+                                    </div>
+                                    <div class="bg-white overflow-hidden shadow sm:rounded-lg">
+                                        <div class="px-4 py-5 sm:p-6">
+                                            <dl>
+                                                <dt class="text-sm leading-5 font-medium text-gray-500 truncate">Dinner</dt>
+                                                <dd class="mt-1 text-3xl leading-9 font-semibold text-indigo-600"><?php echo $DinnerCount; ?></dd>
+                                            </dl>
+                                        </div>
+                                    </div>
+                                    <div class="bg-white overflow-hidden shadow sm:rounded-lg">
+                                        <div class="px-4 py-5 sm:p-6">
+                                            <dl>
+                                                <dt class="text-sm leading-5 font-medium text-gray-500 truncate">Total Meal</dt>
+                                                <dd class="mt-1 text-3xl leading-9 font-semibold text-indigo-600"><?php echo $TotalCount; ?></dd>
+                                            </dl>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <?php
                             $result->free();
                             ?>

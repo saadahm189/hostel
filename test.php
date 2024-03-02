@@ -1,5 +1,3 @@
 <?php
-$today = date('d');
-echo $today;
-$todayNum = date('j');
-echo $todayNum;
+$currentDate = date('l, F j, Y');
+echo $currentDate;
