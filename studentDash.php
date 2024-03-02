@@ -16,6 +16,16 @@
     <?php
     require('partials/connection.php');
     // include("auth_session.php");
+    $today = date('j'); // Date nie asbe  
+    // echo $today;
+    ?>
+    <!-- Receive ID from login page -->
+    <?php
+    if ($_GET) {
+        $sid = $_GET['user'];
+    } else {
+        echo "Url has no user";
+    }
     ?>
     <!-- Header -->
     <div class="bg-green-800 text-white m-5 p-5 flex flex-row justify-center items-center shadow-xl">
@@ -25,7 +35,7 @@
     <!-- Include Header -->
     <div class="flex flex-row justify-center">
         <div class="bg-green-500 m-3 p-3 mt-12 rounded-lg shadow-xl">
-            <a href="studentDash.php">Dashboard</a>
+            <a href="studentDash.php?user=<?php echo $sid; ?>">Dashboard</a>
         </div>
         <div class="bg-green-500 m-3 p-3 mt-12 rounded-lg shadow-xl">
             <a href="#">Personal Information</a>
@@ -35,14 +45,6 @@
         </div>
     </div>
     <!-- PHP -->
-    <!-- Receive ID from login page -->
-    <?php
-    if ($_GET) {
-        $sid = $_GET['user'];
-    } else {
-        echo "Url has no user";
-    }
-    ?>
     <!-- Query -->
     <?php
     $query = "SELECT * FROM `id$sid`";
@@ -143,10 +145,15 @@
         echo $L = $_REQUEST['L'];
         echo $D = $_REQUEST['D'];
 
-        $query = "UPDATE `id$sid` SET `B` = '$B', `L` = '$L', `D` = '$D' WHERE `day` = $day";
+        if ($day > date('j')) { // Date select kore meal on off allow kore
 
-        if ($result = mysqli_query($connection, $query)) {
-            echo "<meta http-equiv='refresh' content='0'>"; // Refreshes page after each submit
+            $query = "UPDATE `id$sid` SET `B` = '$B', `L` = '$L', `D` = '$D' WHERE `day` = $day";
+
+            if ($result = mysqli_query($connection, $query)) {
+                echo "<meta http-equiv='refresh' content='0'>"; // Refreshes page after each submit
+            }
+        } else {
+            echo '<script>alert("Date selection was wrong. You can select date from tomorrow!")</script>';
         }
     }
     ?>
